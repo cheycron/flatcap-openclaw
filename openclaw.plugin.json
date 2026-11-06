@@ -1,0 +1,21 @@
+{
+  "id": "flatcap",
+  "name": "Flatcap",
+  "description": "Flatcap 2.0 appearance theme for the OpenClaw Control UI: Slate (dark) and Daylight (light).",
+  "version": "2.0.0",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false
+  },
+  "themes": [
+    {
+      "id": "flatcap",
+      "name": "Flatcap",
+      "description": "Quiet precision: matte graphite Slate and soft Daylight surfaces, one mineral-blue accent, IBM Plex Sans and Cascadia Mono. Calm and flat, with no mascot.",
+      "source": "themes/flatcap.json",
+      "icons": {
+        "flatcap": "assets/theme-art/flatcap.svg"
+      }
+    }
+  ]
+}
