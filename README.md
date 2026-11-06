@@ -40,11 +40,10 @@ The plugin runs no code, adds no tools and needs no configuration.
 
 ## Install
 
-Requires **OpenClaw 2026.10.9** or newer. Pick one source:
+Requires **OpenClaw 2026.10.9** or newer. Install it from ClawHub or straight from this repository:
 
 ```sh
 openclaw plugins install clawhub:@cheycron/flatcap-openclaw   # ClawHub (recommended)
-openclaw plugins install npm:@cheycron/flatcap-openclaw       # npm
 openclaw plugins install git:github.com/cheycron/flatcap-openclaw   # this repository
 ```
 
