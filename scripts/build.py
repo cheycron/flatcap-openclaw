@@ -11,7 +11,7 @@ Inputs : src/theme.json  vendored copy of the Flatcap 2.0 core; the only source 
 Outputs: openclaw.plugin.json          plugin manifest (declares the theme)
          themes/flatcap.json           theme definition: Slate as dark, Daylight as light
          assets/theme-art/flatcap.svg  brand icon artwork
-         README.md                     the blocks between <!-- build:NAME:start/end --> markers
+         docs/mapping.md               the blocks between <!-- build:NAME:start/end --> markers (not in the package)
 
 Python 3.10+, standard library only. Output is deterministic.
 OpenClaw limits mirrored here come from the installed Control UI / Gateway 2026.10.9 and
@@ -32,7 +32,7 @@ ROOT = Path(__file__).resolve().parent.parent
 THEME = ROOT / "src" / "theme.json"
 LOGO = ROOT / "src" / "logo.svg"
 CORE = (ROOT / ".." / "00-Flatcap").resolve()
-README = ROOT / "README.md"
+MAPPING_DOC = ROOT / "docs" / "mapping.md"
 MANIFEST = ROOT / "openclaw.plugin.json"
 DEFINITION = ROOT / "themes" / "flatcap.json"
 ARTWORK = ROOT / "assets" / "theme-art" / "flatcap.svg"
@@ -66,7 +66,7 @@ COLOR_KEYS = [
 ]
 FONT_KEYS = ["font-sans", "font-mono"]
 
-# Presentation decisions (rationale in README, "Presentation") -------------
+# Presentation decisions (rationale in docs/mapping.md, "Presentation") -------------
 PRESENTATION = {
     "mascot": "none",
     "brandIcon": ICON_ID,
@@ -291,11 +291,11 @@ def contrast_block(theme: dict) -> str:
 BLOCKS = {"tokens": tokens_block, "contrast": contrast_block}
 
 
-def render_readme(theme: dict, text: str) -> str:
+def render_doc(theme: dict, text: str) -> str:
     for name, fn in BLOCKS.items():
         pat = re.compile(rf"(<!-- build:{name}:start -->\n).*?(\n<!-- build:{name}:end -->)", re.S)
         if not pat.search(text):
-            raise SystemExit(f"error: README.md is missing the build:{name} markers")
+            raise SystemExit(f"error: docs/mapping.md is missing the build:{name} markers")
         body = fn(theme)
         text = pat.sub(lambda m: m.group(1) + body + m.group(2), text)
     return text
@@ -409,8 +409,8 @@ def generated(theme: dict) -> dict[Path, str]:
         DEFINITION: dump(definition(theme)),
         ARTWORK: artwork(theme),
     }
-    if README.is_file():
-        out[README] = render_readme(theme, README.read_text(encoding="utf-8"))
+    if MAPPING_DOC.is_file():
+        out[MAPPING_DOC] = render_doc(theme, MAPPING_DOC.read_text(encoding="utf-8"))
     return out
 
 
