@@ -1,50 +1,88 @@
+# Flatcap for OpenClaw
+
+![Version](https://img.shields.io/badge/version-2.0.0-blueviolet) ![OpenClaw](https://img.shields.io/badge/OpenClaw-2026.10.9%2B-blue) ![License](https://img.shields.io/badge/license-MIT-blue)
+
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="images/screenshot-slate.png">
-    <img src="images/screenshot-daylight.png" alt="OpenClaw Control UI with the Flatcap theme: a chat with a code block, table and composer" width="900">
+    <source media="(prefers-color-scheme: light)" srcset="images/screenshot-daylight.png">
+    <img src="images/screenshot-slate.png" alt="OpenClaw Control UI with Flatcap: session sidebar on the left, an assistant reply with a syntax-highlighted code block, a list and a table, and the composer at the bottom" width="100%">
   </picture>
 </p>
 
-# Flatcap for OpenClaw
+<p align="center"><sub>Slate or Daylight is shown to match your GitHub appearance.</sub></p>
 
-Flatcap 2.0 as a theme for the OpenClaw Control UI: **Slate** (dark) and **Daylight** (light). Quiet, flat and matte, with one mineral-blue accent, IBM Plex Sans for reading and Cascadia Mono for code. No mascot.
+**Flatcap for OpenClaw** brings the Flatcap visual system to the OpenClaw Control UI: matte graphite surfaces, one mineral-blue accent, IBM Plex Sans for the interface and the conversation, Cascadia for code.
 
-It is a declarative plugin: the theme is data in `themes/flatcap.json`, declared in `openclaw.plugin.json`. The only code is an `index.js` that registers nothing (OpenClaw 2026.10.9 did not discover a manifest-only plugin without an entry point).
+> The interface organizes. Content takes the foreground. Color informs.
+
+It is a declarative theme plugin. It appears next to the built-in themes in **Settings → Appearance**, with two independently tuned modes, **Slate** (dark) and **Daylight** (light), that follow the Control UI's color-mode setting.
+
+## Quiet precision
+
+[Flatcap](https://github.com/cheycron/flatcap-theme) is a semantic visual system for focused work. Colors are named for **what they do**, not for how they look, and the two modes share roles rather than identical values: Daylight is not an inverted Slate.
+
+- **Hierarchy before decoration.** Surfaces separate by tone and hairline borders; menus and dialogs are the only floating layer.
+- **Useful color.** Mineral blue marks interaction and the current item; red appears only for destructive actions and errors.
+- **Explicit interaction.** Focus rings, field outlines and the primary action stay clearly visible in both modes.
+- **Calm by default.** No mascot, no Lobsterdex and no whimsical status phrases: the working indicator is three quiet dots.
+
+## What is in the box
+
+| File                           | What it is                                                        |
+|:------------------------------ |:----------------------------------------------------------------- |
+| `openclaw.plugin.json`         | Plugin manifest. Declares the theme `flatcap/flatcap`.            |
+| `themes/flatcap.json`          | The theme: Slate and Daylight palettes, fonts and presentation.   |
+| `assets/theme-art/flatcap.svg` | The Flatcap cap, used as the brand icon in the Control UI.        |
+| `index.js`                     | Empty entry point. OpenClaw needs one to discover the plugin.     |
+
+The plugin runs no code, adds no tools and needs no configuration.
 
 ## Install
 
-Requires OpenClaw 2026.10.9 or newer (see [Compatibility](#compatibility)).
+Requires **OpenClaw 2026.10.9** or newer. Pick one source:
 
 ```sh
-# from a local checkout (copy)
-openclaw plugins install /path/to/flatcap-openclaw
-# or link it while developing
-openclaw plugins install -l /path/to/flatcap-openclaw
+openclaw plugins install clawhub:@cheycron/flatcap-openclaw   # ClawHub (recommended)
+openclaw plugins install npm:@cheycron/flatcap-openclaw       # npm
+openclaw plugins install git:github.com/cheycron/flatcap-openclaw   # this repository
 ```
 
-`git:github.com/<owner>/<repo>`, `npm:<package>` and `clawhub:<package>` sources are supported by `openclaw plugins install`, but this package has not been published to any of them yet. Only enabled plugins contribute themes; installing enables the plugin unless you pass `--no-enable`.
+Installing enables the plugin, and the theme becomes available right away; no Gateway restart is needed. To install a local checkout, pass its path instead (`-l` links it while you develop).
 
-## Select it
+## Use it
 
-Open **Settings → Appearance → Theme** and choose **Flatcap**. Its full ID is `flatcap/flatcap`. Color mode follows the Control UI setting (System, Light or Dark): Dark uses Slate, Light uses Daylight.
+1. Open **Settings → Appearance**.
+2. Under **Theme**, choose **Flatcap**.
+3. Set the color mode: **Dark** uses Slate, **Light** uses Daylight, and **System** follows your operating system.
 
-An agent can do the same through the `theme` tool with the ID `flatcap/flatcap`.
+You can also ask your agent: *"Switch my theme to Flatcap."* The agent's theme tool uses the ID `flatcap/flatcap`.
+
+To go back, pick another theme. Uninstalling or disabling the plugin returns you to the default theme.
+
+## Presentation
+
+| Field              | Value                  | Why                                                           |
+|:------------------ |:---------------------- |:------------------------------------------------------------- |
+| `mascot`           | `none`                 | The lobster does not fit a quiet interface.                   |
+| `brandIcon`        | `flatcap`              | The Flatcap cap replaces the claw mark.                       |
+| `workingIndicator` | `dots`                 | A neutral, non-decorative progress signal.                    |
+| `workingPhrases`   | none                   | Long waits are shown without status jokes.                    |
+| `lobsterdex`       | hidden                 | Hiding it does not delete your collection.                    |
+| `brandName`        | not set                | The product is still called OpenClaw.                         |
+
+The community links and the "Pull up a chair" card are left at OpenClaw's default.
 
 ## Fonts
 
-- UI and reading: IBM Plex Sans (bundled with the Control UI).
-- Code, logs, IDs: Cascadia Mono, falling back to Cascadia Code, `ui-monospace`, Consolas. Cascadia Mono is **not** bundled; without it installed the fallbacks apply.
+- **Interface and conversation:** IBM Plex Sans, which ships with the Control UI.
+- **Code, logs and IDs:** Cascadia Mono, falling back to Cascadia Code, `ui-monospace` and Consolas.
 
-## Design decisions
+Themes cannot load fonts from the network. Cascadia is not bundled; install it on the devices you use for the intended look. Layout and colors are unaffected without it.
 
-- **Roles, not positions.** Each OpenClaw token is mapped by intent from the Flatcap role palette (table below), never by order.
-- **Flat.** Surfaces separate by tone and hairline borders; popovers (`bg.raised`) are the only floating layer.
-- **No mascot.** `mascot: "none"`, `lobsterdex: false`, `workingPhrases: []`, `workingIndicator: "dots"`. The community-links entry is left at the host default.
-- **Own brand icon.** `brandIcon: "flatcap"` uses `assets/theme-art/flatcap.svg`, derived from the Flatcap symbol. One shadow was dropped to fit OpenClaw's four-element artwork limit. `brandName` is omitted, so the product name stays "OpenClaw".
-- **Control outlines are real.** `input` maps to `border.control`, which meets 3:1 against its surfaces; decorative separators use `border.subtle`.
-- **One value for two roles.** `secondary` and `muted` both map to `bg.hover`; `primary` and `accent` share the accent family.
+## Mapping: Flatcap roles to OpenClaw tokens
 
-## Token mapping
+Each OpenClaw token is mapped by intent from the Flatcap roles, never by order.
 
 <!-- build:tokens:start -->
 | OpenClaw token | Flatcap role | Slate (dark) | Daylight (light) | Used for |
@@ -72,9 +110,9 @@ An agent can do the same through the `theme` tool with the ID `flatcap/flatcap`.
 | `font-mono` | `font.literal` | `"Cascadia Mono", "Cascadia Mono NF", "Cascadia Code", ui-monospace, Consolas, monospace` | same | Code, logs, IDs: one shared literal slot. |
 <!-- build:tokens:end -->
 
-## Contrast
+## Accessibility
 
-Computed from the palette by `scripts/build.py` (WCAG 2.x). The build fails if any pair misses its target.
+Contrast is computed from the palette by `scripts/build.py` (WCAG 2.x), and the build fails if any pair misses its target: 7:1 for body text, 5:1 for secondary text, links and errors, 3:1 for outlines and focus.
 
 <!-- build:contrast:start -->
 | Foreground | Background | Target | Slate | Daylight |
@@ -118,40 +156,44 @@ Computed from the palette by `scripts/build.py` (WCAG 2.x). The build fails if a
 | `accent-hover (host-derived)` | `background` | 3:1 | 10.04:1 | 8.28:1 |
 <!-- build:contrast:end -->
 
-Rendered check (Chromium 1440×1000, isolated Gateway, sampled computed colors over the effective background; indicative, not an audit):
+The rendered interface was also sampled in both modes (body text, sidebar, links, inline code, blockquotes); everything met AA, from 5.71:1 to 12.15:1.
 
-| Sample | Slate | Daylight |
-| :--- | ---: | ---: |
-| Assistant body text | 12.02:1 | 12.09:1 |
-| Sidebar item | 7.96:1 | 5.71:1 |
-| Composer placeholder | 12.15:1 | 12.06:1 |
-| Link | 10.18:1 | 8.80:1 |
-| Inline code | 8.27:1 | 10.99:1 |
-| Blockquote | 7.87:1 | 5.73:1 |
-
-All sampled text met AA. Known limit: OpenClaw reuses `--input` as both outline and fill in some controls (for example the session-settings search), so a few control fills are the outline color; those spots were not individually measured.
+Known limits: OpenClaw reuses the field-outline color as a fill in a few controls, such as the session-settings search, and those spots were not measured one by one. Hover and focus states of menus and dialogs were not captured.
 
 ## Compatibility
 
-- Theme plugins are documented from OpenClaw **2026.9.6** (`docs/releases/2026.9.6.md`).
-- The presentation fields (`mascot`, `brandIcon`, `workingIndicator`, `lobsterdex`, `workingPhrases`) are documented in `docs/plugins/manifest/surfaces.md` of the installed 2026.10.9; their first release is not stated, so `package.json` requires `>=2026.10.9`, the only version tested.
-- Limits mirrored by the build: 4096 bytes per normalized definition (this one: 1579), 19 colors, 2 font slots, artwork of at most 4 elements.
+- **OpenClaw 2026.10.9** or newer, the version it was tested with. Theme plugins exist since 2026.9.6, but the presentation fields it uses are only documented for 2026.10.9.
+- Rendering was checked in Chromium. Other browsers are not tested.
+- `openclaw plugins validate` reports that the entry exposes no tool or feature metadata. That check targets tool plugins; a theme has none. ClawHub's plugin inspector passes with no findings.
 
-## Regenerate
+## How it is built
 
-Python 3.10+, standard library only.
+`themes/flatcap.json` and the two tables above are generated; do not edit them by hand.
+
+- `src/theme.json` holds the Flatcap 2.0 values. It is a copy of the core, as is `src/logo.svg`.
+- `scripts/build.py` maps the roles to OpenClaw tokens, checks the size limit (4096 bytes per definition), the token set and contrast, and writes the theme. It needs Python 3.10+ and nothing else.
 
 ```sh
-python3 scripts/build.py          # regenerate and validate
-python3 scripts/build.py --check  # fail if generated files are stale
-python3 scripts/build.py --sync   # refresh src/ from ../00-Flatcap, then build
-python3 scripts/build.py --contrast
+python3 scripts/build.py            # regenerate the theme and the README tables
+python3 scripts/build.py --check    # fail if generated files are out of date
+python3 scripts/build.py --sync     # refresh src/ from ../00-Flatcap, then rebuild
+python3 scripts/build.py --contrast # print contrast ratios
 ```
 
-`src/theme.json` and `src/logo.svg` are vendored copies of the Flatcap core. Do not edit generated files by hand.
+`--sync` expects the core checkout next to this repository (`../00-Flatcap`); pass a path to use another one.
 
-## License and support
+Colors come from [Flatcap](https://github.com/cheycron/flatcap-theme), the core of the system.
 
-Code, configuration and color data: MIT, see [LICENSE](LICENSE). The cap geometry derives from third-party artwork (Vexels, [terms](https://vexels.com/terms-and-conditions/)) and is **not** relicensed by the MIT grant.
+## License
 
-If this is useful, you can support the work at <https://buymeacoffee.com/cheycron>.
+MIT. Fonts are not bundled and carry their own licenses. The cap drawing derives from third-party artwork (Vexels, [terms](https://vexels.com/terms-and-conditions/)) and is not relicensed by MIT.
+
+## Support
+
+If Flatcap makes your workspace calmer, you can support its development.
+
+<p align="center">
+  <a href="https://www.buymeacoffee.com/cheycron">
+    <img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me a Coffee">
+  </a>
+</p>

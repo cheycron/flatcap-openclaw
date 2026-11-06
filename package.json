@@ -1,10 +1,10 @@
 {
   "name": "@cheycron/flatcap-openclaw",
   "version": "2.0.0",
-  "description": "Flatcap 2.0 appearance theme for the OpenClaw Control UI: Slate (dark) and Daylight (light). Declarative theme plugin; the entry point registers nothing.",
+  "description": "Flatcap 2.0 theme for the OpenClaw Control UI: Slate (dark) and Daylight (light).",
   "license": "MIT",
   "author": {
-    "name": "Leonardo Anibal Chocron",
+    "name": "Cheycron Blaine",
     "url": "https://cheycron.com"
   },
   "homepage": "https://github.com/cheycron/flatcap-openclaw#readme",
@@ -35,11 +35,17 @@
       "./index.js"
     ],
     "compat": {
-      "pluginApi": ">=2026.10.9"
+      "pluginApi": ">=2026.10.9",
+      "minGatewayVersion": "2026.10.9"
     },
     "install": {
       "minHostVersion": ">=2026.10.9"
+    },
+    "build": {
+      "openclawVersion": "2026.10.9",
+      "pluginSdkVersion": "2026.10.9"
     }
   },
-  "type": "module"
+  "type": "module",
+  "funding": "https://buymeacoffee.com/cheycron"
 }
